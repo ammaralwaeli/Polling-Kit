@@ -113,29 +113,32 @@ public class Login extends javax.swing.JFrame implements CRUD {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         try {
+            con = DBConnection.connect();
             ResultSet rs = selectAllWhere("Admins", "Name", UserName.getText());
-            if (rs == null) {
-                JOptionPane.showMessageDialog(null, "Admin not found");
-            } else {
-                int x = 0;
-                while (rs.next()) {
-                    x++;
-                }
-                rs = selectAllWhere("Admins", "Name", UserName.getText());
-                if (x == 1) {
-                    if (rs.getString("Password").equals(Password.getText())) {
-                        Home h = new Home();
-                        h.setVisible(true);
-                        this.setVisible(false);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Illegal user name and password", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "There is duplicate");
-                }
+
+            int x = 0;
+            while (rs.next()) {
+                x++;
             }
+            rs = selectAllWhere("Admins", "Name", UserName.getText());
+            if (x == 1) {
+                if (rs.getString("Password").equals(Password.getText())) {
+                    Home h = new Home();
+                    h.setVisible(true);
+                    this.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Illegal user name and password", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else if (x > 1) {
+                JOptionPane.showMessageDialog(null, "There is duplicate");
+            } else {
+                JOptionPane.showMessageDialog(null, "Admin not found");
+            }
+
             con.close();
         } catch (SQLException ex) {
+            //Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             //Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1MouseClicked
