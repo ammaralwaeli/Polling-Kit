@@ -26,43 +26,42 @@ public class Report extends javax.swing.JFrame implements CRUD {
 
     public Report() {
         try {
-            
+
             initComponents();
-            
-           con = DBConnection.connect();
-            
+
+            con = DBConnection.connect();
+
             ResultSet rs = selectAllCount("Person", "p_id_in_ps");
             noVoters.setText("Number of voters : " + rs.getInt("jj"));
-            
+
             rs = selectCount("Person", "gender", "gender", "1");
             noMale.setText("Number of male voters : " + rs.getInt("jj"));
-            
+
             rs = selectCount("Person", "gender", "gender", "0");
             noFemale.setText("Number of female voters : " + rs.getInt("jj"));
-            
+
             rs = selectCount("Person", "status", "status", "1");
             noHasVoted.setText("Number of voters has voted : " + rs.getInt("jj"));
-            
+
             rs = selectCount("Person", "status", "status", "1 And gender=1");
             noMaleHasVoted.setText("Number of male voters has voted : " + rs.getInt("jj"));
-            
+
             rs = selectCount("Person", "status", "status", "1 And gender=0");
             noFemaleHasVoted.setText("Number of female voters has voted : " + rs.getInt("jj"));
-            
+
             rs = selectCount("Person", "status", "status", "1 And fingerprint!=0");
             noFingerprints.setText("Number of readed fingerprints : " + rs.getInt("jj"));
-            
+
             rs = selectCount("Person", "status", "status", "1 And fingerprint=0");
             noFingerprintsnot.setText("Number of not readed fingerprints : " + rs.getInt("jj"));
-            
+
             dateOfOpen.setText("Date of opening station : " + Home.open);
-            
+
             dateOfClose.setText("Date of closing station : " + Home.close);
-            
-            rs=selectAll("barcodes");
-           barcodes.setModel(DbUtils.resultSetToTableModel(rs));
-            
-            
+
+            rs = selectAll("barcodes");
+            barcodes.setModel(DbUtils.resultSetToTableModel(rs));
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -97,6 +96,7 @@ public class Report extends javax.swing.JFrame implements CRUD {
         noFingerprintsnot = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         barcodes = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -173,6 +173,14 @@ public class Report extends javax.swing.JFrame implements CRUD {
         ));
         jScrollPane3.setViewportView(barcodes);
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        jButton1.setText("Exit");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -190,7 +198,7 @@ public class Report extends javax.swing.JFrame implements CRUD {
                                 .addComponent(jLabel1))
                             .addComponent(jSeparator1)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 236, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel5)
                                 .addGap(150, 150, 150)
                                 .addComponent(jLabel4)
@@ -203,13 +211,17 @@ public class Report extends javax.swing.JFrame implements CRUD {
                             .addComponent(noFemale)
                             .addComponent(noMaleHasVoted)
                             .addComponent(noHasVoted)
-                            .addComponent(dateOfClose)
                             .addComponent(dateOfOpen)
                             .addComponent(noFingerprintsnot)
                             .addComponent(noFingerprints)
                             .addComponent(noFemaleHasVoted)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(dateOfClose)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(220, 220, 220)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 53, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,32 +238,39 @@ public class Report extends javax.swing.JFrame implements CRUD {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(noVoters)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(noMale)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(noFemale)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(noHasVoted)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(noMaleHasVoted)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(noFemaleHasVoted)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(noFingerprints)
-                .addGap(4, 4, 4)
-                .addComponent(noFingerprintsnot)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateOfOpen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateOfClose)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(noVoters)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(noMale)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(noFemale)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(noHasVoted)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(noMaleHasVoted)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(noFemaleHasVoted)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(noFingerprints)
+                        .addGap(4, 4, 4)
+                        .addComponent(noFingerprintsnot)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dateOfOpen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dateOfClose)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -292,6 +311,7 @@ public class Report extends javax.swing.JFrame implements CRUD {
     private javax.swing.JTable barcodes;
     private javax.swing.JLabel dateOfClose;
     private javax.swing.JLabel dateOfOpen;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -328,7 +348,7 @@ public class Report extends javax.swing.JFrame implements CRUD {
 
     @Override
     public ResultSet selectAll(String tableName) {
-        ResultSet rs=null;
+        ResultSet rs = null;
         try {
             PreparedStatement pst = con.prepareStatement("select * from " + tableName);
             rs = pst.executeQuery();
@@ -348,11 +368,11 @@ public class Report extends javax.swing.JFrame implements CRUD {
     public ResultSet selectAll(String tableName, String[] coloums) {
         ResultSet rs = null;
         try {
-            String sql="select "+coloums[0];
-            for(int i=1;i<coloums.length-1;i++){
-                sql+=","+coloums[i]+",";
+            String sql = "select " + coloums[0];
+            for (int i = 1; i < coloums.length - 1; i++) {
+                sql += "," + coloums[i] + ",";
             }
-            sql+=coloums[coloums.length-1];
+            sql += coloums[coloums.length - 1];
             PreparedStatement pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
         } catch (SQLException ex) {
