@@ -13,17 +13,20 @@ import java.sql.ResultSet;
  */
 public interface CRUD {
 
-    public void insert(String tableName,String coloums[], String values[]);
+    public void insert(String tableName, String coloums[], String values[]);
 
-    public void update(String tableName, String values[], String where,String whereValue);
+    public void update(String tableName, String values[], String where, String whereValue);
 
-    public void delete(String tableName, String where,String whereValue);
+    public void delete(String tableName, String where, String whereValue);
 
     public ResultSet selectAll(String tableName);
 
-    public ResultSet selectAllWhere(String tableName, String where,String whereValue);
+    public ResultSet selectCount(String tableName, String column, String where, String wValue);
+    public ResultSet selectAllCount(String tableName, String column);
+
+    public ResultSet selectAllWhere(String tableName, String where, String whereValue);
 
     public ResultSet selectAll(String tableName, String coloums[]);
 
-    public ResultSet select(String tableName, String coloums[], String where,String whereValue);
+    public ResultSet select(String tableName, String coloums[], String where, String whereValue);
 }

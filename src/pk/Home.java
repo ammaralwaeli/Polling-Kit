@@ -25,7 +25,7 @@ public class Home extends javax.swing.JFrame implements CRUD {
      * Creates new form Home1
      */
     Connection con;
-
+    static LocalDateTime open,close;
     public Home() {
         try {
             con = DBConnection.connect();
@@ -33,6 +33,7 @@ public class Home extends javax.swing.JFrame implements CRUD {
             lblBarcode.setVisible(false);
             barcode.setVisible(false);
             btnOk.setVisible(false);
+            open=LocalDateTime.now();
         } catch (ClassNotFoundException ex) {
             //Logger.getLogger(Home1.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,6 +78,7 @@ public class Home extends javax.swing.JFrame implements CRUD {
         lblBarcode = new javax.swing.JLabel();
         barcode = new javax.swing.JTextField();
         btnOk = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,6 +110,13 @@ public class Home extends javax.swing.JFrame implements CRUD {
             }
         });
 
+        jButton2.setText("انهاء التصويت");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -134,9 +143,12 @@ public class Home extends javax.swing.JFrame implements CRUD {
                                 .addComponent(jLabel4)
                                 .addGap(80, 80, 80))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(VoterID, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton2)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(VoterID, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel6)
                                 .addGap(20, 20, 20))))
@@ -168,7 +180,6 @@ public class Home extends javax.swing.JFrame implements CRUD {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -189,7 +200,8 @@ public class Home extends javax.swing.JFrame implements CRUD {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnOk))))
+                            .addComponent(btnOk)
+                            .addComponent(jButton2))))
                 .addGap(50, 50, 50))
         );
 
@@ -299,6 +311,22 @@ public class Home extends javax.swing.JFrame implements CRUD {
         }
     }//GEN-LAST:event_btnOkMouseClicked
 
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        int a=JOptionPane.showConfirmDialog(null, "هل انت متأكد من انهاء التصويت؟ ", "انهاء التصويت", JOptionPane.YES_NO_OPTION);
+        if(a==0){
+            close=LocalDateTime.now();
+            Report r=new Report();
+            this.setVisible(false);
+            r.setVisible(true);
+            
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                //Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -340,6 +368,7 @@ public class Home extends javax.swing.JFrame implements CRUD {
     private javax.swing.JTextField barcode;
     private javax.swing.JButton btnOk;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -427,6 +456,16 @@ public class Home extends javax.swing.JFrame implements CRUD {
 
     @Override
     public ResultSet select(String tableName, String[] coloums, String where, String whereValue) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ResultSet selectCount(String tableName, String column, String where, String wValue) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ResultSet selectAllCount(String tableName, String column) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
